@@ -1,6 +1,8 @@
 <template>
   <v-container>
-    <v-img class="mx-auto" max-height="3500" max-width="2000" src="https://i.postimg.cc/mZHkfjgD/Fondo-Inicio.png"></v-img>
+    <transition appear  v-on:appear="customAppearHook">
+          <v-img class="mx-auto" max-height="3500" max-width="2000" src="https://i.postimg.cc/mZHkfjgD/Fondo-Inicio.png"></v-img>
+    </transition>
     <br>
       <h1 class="text-center">Login de Usuario</h1>
       <br>

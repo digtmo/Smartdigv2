@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-data-table  :headers="headers" :items="arrayCursos" sort-by="Np" class="elevation-3"   >
+    <v-data-table  :headers="headers" :items="PedidosDelDiaArray[0]" sort-by="Np" class="elevation-3"   >
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title>Pedidos Por Día</v-toolbar-title>
@@ -168,16 +168,34 @@
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-      </template>
+        <v-checkbox :items="Retiro" 
+                    v-model="editedItem.Retiro "
+                    ></v-checkbox>
 
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset </v-btn>
       </template>
 
       
 
+      <template v-slot:no-data>
+        <v-btn color="primary" @click="initialize"> Reset </v-btn>
+      </template>      
+
     </v-data-table>
+
+  <v-container>
+     <v-btn color="error" text @click="PedidosDelDiaPush">
+                  BOTON de prueba
+      </v-btn>
+   
+      
+      <h2>Total Pedidos del dia: {{TotalPedidosDelDia}}</h2>
+
+      <h2>Cantidad de Pedidos del día:{{CantidadDePedidosDelDia}}</h2> 
   </v-container>
+        
+ 
+  </v-container>
+
 </template>
 <script>
 import { mapActions } from "vuex";
@@ -208,7 +226,6 @@ export default {
       { text: "Acciones", value: "actions", sortable: false },
     ],
     arrayCursos: [],
-    PedidosDelDiaArray:[],
     Productos1:[{name: 'Escalonado de Rosas', price: 40000},
                 {name: 'Matilda', price: 20000},
                 {name: 'Ramo Premium Tulipanes' , price: 15000},
@@ -228,6 +245,7 @@ export default {
     Horariodeentrega:["09:00 hrs - 11:00 hrs","11:00 hrs - 13:00 hrs","13:00 hrs - 15:00 hrs","15:00 hrs - 17:00 hrs","17:00 hrs - 20:00 hrs"],
     Costoprueba:"0",
     costototal:[],
+    PedidosDelDiaArray: [],
     editedIndex: -1,
     editedItem: {
       Estado: false,
@@ -246,7 +264,7 @@ export default {
       Retiro: false,
       Costoprueba:[],
       Fechadeenvio: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-      Valor2:[]
+      Valor2:[],
     },
     defaultItem: {
       Estado: false,
@@ -272,7 +290,28 @@ export default {
     formTitle() {
       return this.editedIndex ? "Nuevo pedido" : "Editar pedido";
     },
+    
+    hoy(){
+      const fecha = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10) // Se obtiene la fecha de hoy.
+      return fecha
+    },
 
+    PedidosDelDia() {
+      return this.cursos.filter(item => item.Fechadeenvio === this.hoy)
+    }, // Filtra la fecha de envio indicada (this.hoy). luego imprime y suma todos los costos asociados a esa fecha de envio.. SE PUEDE QUITAR REDUCE Y DEJAR UN LENGTH PARA CONTAR
+
+     CantidadDePedidosDelDia() {
+      return this.cursos.filter(item => item.Fechadeenvio === this.hoy).length
+    },
+
+     TotalPedidosDelDia() {
+      return this.cursos.filter(item => item.Fechadeenvio === this.hoy).map(item =>  parseInt(item.Costoprueba)).reduce((item,curr) => item + curr, 0)
+    },
+
+  },
+
+  beforecreated() {
+    this.initialize();
   },
 
   watch: {
@@ -284,8 +323,11 @@ export default {
     },
   },
 
-  created() {
-    this.initialize();
+
+
+  beforeMount(){
+    const deldia = this.cursos.filter(item => item.Fechadeenvio === this.hoy)
+    this.PedidosDelDiaArray.push(deldia)
   },
 
   methods: {
@@ -295,6 +337,7 @@ export default {
       "borrarCurso",
       "traerCursos",
     ]),
+
 
      buscarValor(x){
      const rt1 =  this.Productos1.find(item => item.name === x);

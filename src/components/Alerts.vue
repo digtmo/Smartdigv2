@@ -19,19 +19,22 @@
 
         <v-alert type="warning">
           Pedidos con retiro:
-          <strong>{{PedidoConRetiro }}</strong> 
+          <strong>{{ PedidosConRetiro }}</strong> 
         </v-alert>
- 
 
-      <v-btn color="error" text @click="MetodoPedidosDelDia">
+    
+
+        
+
+      <v-btn color="error" text @click="PedidosDelDia">
                   BOTON DE PRUEBA Alerts
       </v-btn>
 
-      <h3>{{hoy}}</h3>
-      <h2>PedidosDelDia Array{{PedidosDelDiaArray}}</h2>
-      <h2>CantidadDePedidosDelDia{{CantidadDePedidosDelDia}}</h2>
+      <h3>Fecha de hoy: {{hoy}}</h3>
 
-   
+      <h3>Numero de mes actual: {{mes}}</h3>
+
+    
       
     </div>
   </v-container>
@@ -53,19 +56,39 @@ export default {
     TotaVentas() {
       return this.cursos.map(item =>  parseInt(item.Costoprueba)).reduce((item,curr) => item + curr, 0)
     },
-   PedidoConRetiro() {
+    PedidosConRetiro() {
       return  this.cursos.filter(item => item.Retiro).length
     },
-   PedidosSinIniciar() {
+    PedidosSinIniciar() {
       return this.TotalDePedidos - this.PedidosIniciados
     },
-   PedidosIniciados() {
+    PedidosIniciados() {
       return this.cursos.filter(item => item.Estado).length
     },
-   TotalDePedidos() {
+    TotalDePedidos() {
       return this.cursos.length
     },
+    MostrarPedidos(){ 
+      return this.cursos
+    },
+ 
 
+    PedidosDelMes(){
+      return this.cursos.filter(item => item.Fechadeenvio.getMonth === 6)
+    },
+
+   
+
+    PruebaFiltroMes() {
+      return this.cursos.filter(item => item.Fechadeenvio === "2022-05-17").map(item =>  parseInt(item.Costoprueba)).reduce((item,curr) => item + curr, 0)
+    }, // Filtra la fecha de envio indicada (escrita manual). luego imprime y suma todos los costos asociados a esa fecha de envio.. SE PUEDE QUITAR REDUCE Y DEJAR UN LENGTH PARA CONTAR
+
+    BuscarPedido(){
+      const CursosIndex = this.cursos.findIndex(element => this.cursos.envia === element)
+      console.log(CursosIndex)
+      return this.cursos[CursosIndex] 
+    },
+       
     hoy(){
       const fecha = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10) // Se obtiene la fecha de hoy.
       return fecha
@@ -78,7 +101,7 @@ export default {
 
     mes(){
       const fechita = new Date
-      return fechita.getMonth() +1
+      return fechita.getMonth() +1 
     },
       
     dia(){
@@ -101,17 +124,6 @@ export default {
       return meses
     },
 
-    PedidosDelDia() {
-      return this.cursos.filter(item => item.Fechadeenvio === this.hoy)
-    }, // Filtra la fecha de envio indicada (this.hoy). luego imprime y suma todos los costos asociados a esa fecha de envio.. SE PUEDE QUITAR REDUCE Y DEJAR UN LENGTH PARA CONTAR
-
-    CantidadDePedidosDelDia() {
-      return this.cursos.filter(item => item.Fechadeenvio === this.hoy).length
-    },
-
-    PruebaFiltroMes() {
-      return this.cursos.filter(item => item.Fechadeenvio === "2022-05-17").map(item =>  parseInt(item.Costoprueba)).reduce((item,curr) => item + curr, 0)
-      }, // Filtra la fecha de envio indicada (escrita manual). luego imprime y suma todos los costos asociados a esa fecha de envio.. SE PUEDE QUITAR REDUCE Y DEJAR UN LENGTH PARA CONTAR
   },
    methods: {
     ...mapActions(['traerCursos']),

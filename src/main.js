@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify'
 import firebase from 'firebase'
 
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyATBlT9gMG1iNm6wJe6eIURyPe9GPCoP-o",
   authDomain: "proyectosmartdig.firebaseapp.com",
@@ -18,6 +19,8 @@ const firebaseConfig = {
 // 123456
 
 firebase.initializeApp(firebaseConfig);
+
+
 
 
 Vue.config.productionTip = false
