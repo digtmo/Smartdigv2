@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container >
     <transition appear  v-on:appear="customAppearHook">
           <v-img class="mx-auto" max-height="3500" max-width="2000" src="https://i.postimg.cc/mZHkfjgD/Fondo-Inicio.png"></v-img>
     </transition>
@@ -103,3 +103,4 @@ export default {
   },
 };
 </script>
+

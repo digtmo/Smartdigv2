@@ -1,8 +1,47 @@
 <template>
   <div>
     <div class="d-flex justify-center pt-5">
-      <h1>Finanzssaas</h1>
+      <h1>Finanzas</h1>
     </div>
+
+    <v-container>
+      <v-hover>
+    <v-card
+      slot-scope="{ hover }"
+      class="mx-auto"
+      color="grey lighten-4"
+      max-width="600"
+    >
+      <v-img
+        :aspect-ratio="16/9"
+        src="https://img.freepik.com/vector-gratis/impulsar-ilustracion-concepto-abstracto-ventas_335657-1833.jpg?w=2000"
+      >
+        <v-expand-transition>
+          <div
+            v-if="hover"
+            class="d-flex transition-fast-in-fast-out green darken-2 v-card--reveal display-3 white--text"
+            style="height: 100%;"
+          >
+           $ {{TotaVentas}}
+          </div>
+        </v-expand-transition>
+      </v-img>
+      <v-card-text
+        class="pt-4"
+        style="position: relative;"
+      >
+       
+        <h3 class="display-1 font-weight-light green--text mb-2">Total de ventas</h3>
+        <div class="font-weight-light title mb-2">
+          Ventas desde comienzo del uso del software.
+        </div>
+      </v-card-text>
+    </v-card>
+  </v-hover>
+    </v-container>
+
+    
+
 
   <v-container>
     <div>
@@ -161,3 +200,15 @@ export default {
   
 };
 </script>
+
+
+<style>
+.v-card--reveal {
+  align-items: center;
+  bottom: 0;
+  justify-content: center;
+  opacity: .9;
+  position: absolute;
+  width: 100%;
+}
+</style>
