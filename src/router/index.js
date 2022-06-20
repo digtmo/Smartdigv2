@@ -52,7 +52,13 @@ const routes = [{
 		path: '/Gestion',
 		name: 'Gestion',
 		meta: { login: true },
-		component: () => import( /* webpackChunkName: "editando" */ '../views/Gestion.vue')
+		component: () => import( /* webpackChunkName: "editando" */ '../views/Gestion.vue') ///  eliminar???
+	},
+	{
+		path: '/Ingresodecosto',
+		name: 'TableCosto',
+		meta: { login: false },
+		component: () => import( /* webpackChunkName: "editando" */ '../components/Costos/TableCostos.vue')
 	},
 	{
 		path: '*',
