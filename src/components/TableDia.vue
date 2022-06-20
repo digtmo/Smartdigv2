@@ -8,15 +8,6 @@
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
             
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="orange" dark class="mb-2" v-bind="attrs" v-on="on">  
-                Ingresar Pedido
-              </v-btn>   
-                 <v-btn color="error" text @click="MetodoPedidosDelDia">
-                  BOTON DE PRUEBA table
-                </v-btn>
-            </template>
-          
             <v-card>
               <v-card-title>
                
@@ -129,11 +120,22 @@
                     ></v-checkbox>
                     </v-col>
 
+                    <v-col>
+                      <v-checkbox
+                    v-model="editedItem.check"
+                    :label="`Marca esta casilla si acordaste retiro`"
+                    ></v-checkbox>
+                    </v-col>
+
+  
+
               
 
               </v-row>
                 </v-container>
               </v-card-text>
+
+           
 
               <v-card-actions class="d-flex justify-center pt-5">
                 <v-btn color="warning" text @click="close">
@@ -168,9 +170,17 @@
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-        <v-checkbox :items="Retiro" 
-                    v-model="editedItem.Retiro "
-                    ></v-checkbox>
+        
+
+        <v-checkbox v-model="editedItem.Checkbox">
+        ></v-checkbox>
+
+      </template>
+
+      
+      <template v-slot:[`item.Checkbox`]="{ item }">
+           <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-checkbox v-model="editedItem.Retiro" :label="`Retiro`"></v-checkbox>
 
       </template>
 
@@ -223,6 +233,7 @@ export default {
       { text: "Fecha de envío", value: "Fechadeenvio" },
       { text: "Horario de entrega", value: "Horariodeentrega" },
       { text: "Total", value: "Costoprueba" },
+       { text: "checkbox", value: "checkbox" },
       { text: "Acciones", value: "actions", sortable: false },
     ],
     arrayCursos: [],
@@ -261,10 +272,11 @@ export default {
       Observacion:"",
       Horariodeentrega:"",
       Total: "",
-      Retiro: false,
+      Retiro: false ,
       Costoprueba:[],
       Fechadeenvio: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       Valor2:[],
+      checkbox: false,
     },
     defaultItem: {
       Estado: false,
@@ -305,14 +317,12 @@ export default {
     },
 
      TotalPedidosDelDia() {
-      return this.cursos.filter(item => item.Fechadeenvio === this.hoy).map(item =>  parseInt(item.Costoprueba)).reduce((item,curr) => item + curr, 0)
+      return this.cursos.filter(item => item.Fechadeenvio === this.hoy).map(item =>  parseInt(item.PrecioProducto1)).reduce((item,curr) => item + curr, 0)
     },
 
   },
 
-  beforecreated() {
-    this.initialize();
-  },
+  
 
   watch: {
     dialog(val) {
@@ -328,6 +338,7 @@ export default {
   beforeMount(){
     const deldia = this.cursos.filter(item => item.Fechadeenvio === this.hoy)
     this.PedidosDelDiaArray.push(deldia)
+     this.initialize();
   },
 
   methods: {

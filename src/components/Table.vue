@@ -12,9 +12,7 @@
               <v-btn color="orange" dark class="mb-2" v-bind="attrs" v-on="on">  
                 Ingresar Pedido
               </v-btn>   
-                 <v-btn color="error" text @click="buscarValor">
-                  BOTON DE PRUEBA table
-                </v-btn>
+                
             </template>
           
             <v-card>
@@ -152,7 +150,7 @@
 
           <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
-              <v-card-title class="text-h5">Seguro que quieres eliminar este curso?</v-card-title>
+              <v-card-title class="text-h5">Seguro que quieres eliminar este pedido?</v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
@@ -174,9 +172,11 @@
         <v-btn color="primary" @click="initialize"> Reset </v-btn>
       </template>
 
-      
+     
 
     </v-data-table>
+
+    
   </v-container>
 </template>
 <script>
@@ -204,28 +204,27 @@ export default {
       { text: "Observacion", value: "Observacion" },
       { text: "Fecha de envío", value: "Fechadeenvio" },
       { text: "Horario de entrega", value: "Horariodeentrega" },
-      { text: "Total", value: "Costoprueba" },
+      { text: "Total", value: "PrecioProducto1" },
       { text: "Acciones", value: "actions", sortable: false },
     ],
     arrayCursos: [],
-    Productos1:[{name: 'Escalonado de Rosas', price: 40000},
-                {name: 'Matilda', price: 20000},
-                {name: 'Ramo Premium Tulipanes' , price: 15000},
-                {name: 'Ramo abierto' , price: 45000},
-                {name:'Arreglo Ross' , price: 10000},
-                {name: 'Ajuar Florido' , price: 26000},
-                {name:'Ramo circulares' , price: 50000},
-                {name:'Ramo Premium' , price: 17000},
-                {name:'Caja Rose' , price: 22000},
-                {name:'Caja Heart' , price: 28000},
-                {name:'Rosas en Altura' , price: 35000},
-                {name:'Caja Freedom & Gold' , price: 34000},                                                                                                  
-                {name:'Caja Whisky' , price: 45000},
-                {name:'Ramo Corazón', price: 17000},
-                {name: 'Caja Sidra ', price: 27000}],
+    Productos1:[{name: 'Escalonado de Rosas', price: 40000, cost:17000},
+                {name: 'Matilda', price: 20000,cost:8000},
+                {name: 'Ramo Premium Tulipanes' , price: 15000, cost:6000},
+                {name: 'Ramo abierto' , price: 45000, cost:21000},
+                {name:'Arreglo Ross' , price: 10000, cost:4000},
+                {name: 'Ajuar Florido' , price: 26000, cost:12000},
+                {name:'Ramo circulares' , price: 50000, cost:26000},
+                {name:'Ramo Premium' , price: 17000, cost:8000},
+                {name:'Caja Rose' , price: 22000, cost:11000},
+                {name:'Caja Heart' , price: 28000, cost:12000},
+                {name:'Rosas en Altura' , price: 35000, cost:22000},
+                {name:'Caja Freedom & Gold' , price: 34000, cost:12000},                                                                                                  
+                {name:'Caja Whisky' , price: 45000, cost:21000},
+                {name:'Ramo Corazón', price: 17000, cost:8000},
+                {name: 'Caja Sidra ', price: 27000, cost:13000}],
     Productos2:["Caja Chocolate 12" , "Caja Chocolate 24"],
     Horariodeentrega:["09:00 hrs - 11:00 hrs","11:00 hrs - 13:00 hrs","13:00 hrs - 15:00 hrs","15:00 hrs - 17:00 hrs","17:00 hrs - 20:00 hrs"],
-    Costoprueba:"0",
     costototal:[],
     editedIndex: -1,
     editedItem: {
@@ -243,9 +242,10 @@ export default {
       Horariodeentrega:"",
       Total: "",
       Retiro: false,
-      Costoprueba:[],
+      PrecioProducto1:[],
       Fechadeenvio: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-      Valor2:[]
+      Valor2:[],
+      CostoProducto1:[]
     },
     defaultItem: {
       Estado: false,
@@ -262,7 +262,8 @@ export default {
       Horariodeentrega:"",
       Total:"",
       Retiro: false,
-      Costoprueba:"0",
+      PrecioProducto1:"0",
+      CostoProducto1:"0"
     },
   }),
 
@@ -283,7 +284,7 @@ export default {
     },
   },
 
-  created() {
+  beforeMount() {
     this.initialize();
   },
 
@@ -295,19 +296,18 @@ export default {
       "traerCursos",
     ]),
 
-     buscarValor(x){
-     const rt1 =  this.Productos1.find(item => item.name === x);
-     const rt2 = rt1.price
-     this.editedItem.Costoprueba.push(rt2)
+     buscarPrecio(x){
+     let rt1 =  this.Productos1.find(item => item.name === x);
+     let rt2 = rt1.price
+     this.editedItem.PrecioProducto1.push(rt2)     // Busca el price del producto indicado (x) y se envia al array PrecioProducto1, se inicializa al registrar un nuevo pedido.
+    },
+    
+    buscarCosto(x){
+     let rt1 =  this.Productos1.find(item => item.name === x);
+     let rt2 = rt1.cost
+     this.editedItem.CostoProducto1.push(rt2)    // Busca el cost del producto indicado (x) y se envia al array CostoProducto1, se inicializa al registrar un nuevo pedido.
     }, 
 
-   
-
-    juntar(){
-      this.costototal.push(parseInt(this.Costoprueba))
-      console.log(this.costototal)
-      console.log(this.arrayCursos)
-    },
   
     initialize() {
       this.arrayCursos = this.cursos;
@@ -344,7 +344,6 @@ export default {
     deleteItemConfirm() {
       let cursoEliminar = this.arrayCursos.splice(this.editedIndex, 1);
       this.borrarCurso(cursoEliminar[0]);
-
       this.closeDelete();
     },
 
@@ -364,8 +363,9 @@ export default {
       });
     },
   
-    ingresarCurso() {
-      this.buscarValor(this.editedItem.Producto1)
+    ingresarCurso() {     // Registra los pedidos y llama a las funciones para pushear precios y costos, para posteriores calculos.
+      this.buscarPrecio(this.editedItem.Producto1) 
+      this.buscarCosto(this.editedItem.Producto1)
       this.agregarCurso(this.editedItem);
       this.close();
       

@@ -55,10 +55,11 @@ export default new Vuex.Store({
 									Mensaje: element.data().Mensaje,
 									Observacion: element.data().Observacion,
 									Horariodeentrega: element.data().Horariodeentrega,
-									Costoprueba:element.data().Costoprueba,
+									PrecioProducto1:element.data().PrecioProducto1,
 									Fechadeenvio: element.data().Fechadeenvio,
 									Valor2: element.data().Valor2,
 									Total: element.data().Total,
+									CostoProducto1: element.data().CostoProducto1,
 									idDoc: element.id,
 								});
 							});

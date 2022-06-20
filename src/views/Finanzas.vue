@@ -4,43 +4,156 @@
       <h1>Finanzas</h1>
     </div>
 
-    <v-container>
-      <v-hover>
-    <v-card
-      slot-scope="{ hover }"
-      class="mx-auto"
-      color="grey lighten-4"
-      max-width="600"
-    >
-      <v-img
-        :aspect-ratio="16/9"
-        src="https://img.freepik.com/vector-gratis/impulsar-ilustracion-concepto-abstracto-ventas_335657-1833.jpg?w=2000"
-      >
-        <v-expand-transition>
-          <div
-            v-if="hover"
-            class="d-flex transition-fast-in-fast-out green darken-2 v-card--reveal display-3 white--text"
-            style="height: 100%;"
-          >
-           $ {{TotaVentas}}
-          </div>
-        </v-expand-transition>
-      </v-img>
-      <v-card-text
-        class="pt-4"
-        style="position: relative;"
-      >
-       
-        <h3 class="display-1 font-weight-light green--text mb-2">Total de ventas</h3>
-        <div class="font-weight-light title mb-2">
-          Ventas desde comienzo del uso del software.
-        </div>
-      </v-card-text>
-    </v-card>
-  </v-hover>
-    </v-container>
 
-    
+    <v-container class="grey lighten-5">
+    <v-row no-gutters>
+      <v-col
+        cols="12"
+        sm="12"
+        md="4"
+      >
+        <v-card
+          class="pa-2"
+          outlined
+          tile
+        >
+            <v-hover>
+        <v-card
+          slot-scope="{ hover }"
+          class="mx-auto"
+          color="grey lighten-4"
+          max-width="600"
+        >
+          <v-img
+            :aspect-ratio="16/9"
+            src="https://img.freepik.com/vector-gratis/impulsar-ilustracion-concepto-abstracto-ventas_335657-1833.jpg?w=2000"
+          >
+            <v-expand-transition>
+              <div
+                v-if="hover"
+                class="d-flex transition-fast-in-fast-out green darken-2 v-card--reveal display-3 white--text"
+                style="height: 100%;"
+              >
+              $ {{TotalVentas}}
+              </div>
+            </v-expand-transition>
+          </v-img>
+          <v-card-text
+            class="pt-4"
+            style="position: relative;"
+          >
+          
+            <h3 class="display-1 font-weight-light green--text mb-2">Total de ventas</h3>
+            <div class="font-weight-light title mb-2">
+              Total de ventas del mes.
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-hover>
+        </v-card>
+      </v-col>
+
+
+      <v-col
+          cols="12"
+        sm="12"
+        md="4"
+      >
+        <v-card
+          class="pa-2"
+          outlined
+          tile
+        >
+           <v-hover>
+        <v-card
+          slot-scope="{ hover }"
+          class="mx-auto"
+          color="grey lighten-4"
+          max-width="600"
+        >
+          <v-img
+            :aspect-ratio="16/9"
+            src="https://img.freepik.com/vector-gratis/impulsar-ilustracion-concepto-abstracto-ventas_335657-1833.jpg?w=2000"
+          >
+            <v-expand-transition>
+              <div
+                v-if="hover"
+                class="d-flex transition-fast-in-fast-out green darken-2 v-card--reveal display-3 white--text"
+                style="height: 100%;"
+              >
+              $ {{TotalCostos}}
+              </div>
+            </v-expand-transition>
+          </v-img>
+          <v-card-text
+            class="pt-4"
+            style="position: relative;"
+          >
+          
+            <h3 class="display-1 font-weight-light green--text mb-2">Total de Costos</h3>
+            <div class="font-weight-light title mb-2">
+              Total de costos del mes.
+            </div>
+            <div class="font-weight-light title mb-2">
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-hover>
+        </v-card>
+        
+
+
+      </v-col>
+        <v-col
+          cols="12"
+        sm="12"
+        md="4"
+      >
+        <v-card
+          class="pa-2"
+          outlined
+          tile
+        >
+         <v-hover>
+        <v-card
+          slot-scope="{ hover }"
+          class="mx-auto"
+          color="grey lighten-4"
+          max-width="600"
+        >
+          <v-img
+            :aspect-ratio="16/9"
+            src="https://img.freepik.com/vector-gratis/impulsar-ilustracion-concepto-abstracto-ventas_335657-1833.jpg?w=2000"
+          >
+            <v-expand-transition>
+              <div
+                v-if="hover"
+                class="d-flex transition-fast-in-fast-out green darken-2 v-card--reveal display-3 white--text"
+                style="height: 100%;"
+              >
+              $ {{TotalVentas - TotalCostos}}
+              </div>
+            </v-expand-transition>
+          </v-img>
+          <v-card-text
+            class="pt-4"
+            style="position: relative;"
+          >
+          
+            <h3 class="display-1 font-weight-light green--text mb-2">Utilidad</h3>
+            <div class="font-weight-light title mb-2">
+              Utilidad calculada del mes.
+            </div>
+            <div class="font-weight-light title mb-2">
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-hover>
+        </v-card>
+        
+      </v-col>
+    </v-row>
+  </v-container>
 
 
   <v-container>
@@ -163,8 +276,11 @@ export default {
   
 
   computed: {
-     TotaVentas() {
-      return this.cursos.map(item =>  parseInt(item.Costoprueba)).reduce((item,curr) => item + curr, 0)
+    TotalVentas() {
+      return this.cursos.map(item =>  parseInt(item.PrecioProducto1)).reduce((item,curr) => item + curr, 0)
+    },
+    TotalCostos() {
+      return this.cursos.map(item =>  parseInt(item.CostoProducto1)).reduce((item,curr) => item + curr, 0)
     },
    PedidoConRetiro() {
       return  this.cursos.filter(item => item.Retiro).length
@@ -181,6 +297,15 @@ export default {
 
     ProductoFecha() {
       return this.cursos.map(item => item.Fecha) // Función que busque los pedidos que cumplan con el mes a escoger 
+    },
+
+    hoy(){
+      const fecha = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10) // Se obtiene la fecha de hoy.
+      return fecha
+    },
+
+    TotalVentasDelDia() {
+      return this.cursos.filter(item => item.Fechadeenvio === this.hoy).map(item =>  parseInt(item.Costoprueba)).reduce((item,curr) => item + curr, 0)
     },
 
 

@@ -4,7 +4,7 @@
 
         <v-alert type="success">
            Total de ventas:
-        <strong>${{ TotaVentas }}</strong> 
+        <strong>${{ TotalVentas }}</strong> 
         </v-alert>
 
         <v-alert type="info">
@@ -34,6 +34,8 @@
 
       <h3>Numero de mes actual: {{mes}}</h3>
 
+      <h3>Total Costos: {{TotalCostos}}</h3>
+
       
     
       
@@ -54,8 +56,11 @@ export default {
   }),
 
   computed: {
-    TotaVentas() {
-      return this.cursos.map(item =>  parseInt(item.Costoprueba)).reduce((item,curr) => item + curr, 0)
+    TotalVentas() {
+      return this.cursos.map(item =>  parseInt(item.PrecioProducto1)).reduce((item,curr) => item + curr, 0)
+    },
+    TotalCostos() {
+      return this.cursos.map(item =>  parseInt(item.CostoProducto1)).reduce((item,curr) => item + curr, 0)
     },
     PedidosConRetiro() {
       return  this.cursos.filter(item => item.Retiro).length
@@ -72,13 +77,11 @@ export default {
     MostrarPedidos(){ 
       return this.cursos
     },
- 
 
     PedidosDelMes(){
       return this.cursos.filter(item => item.Fechadeenvio.getMonth === 6)
     },
 
-   
 
     PruebaFiltroMes() {
       return this.cursos.filter(item => item.Fechadeenvio === "2022-05-17").map(item =>  parseInt(item.Costoprueba)).reduce((item,curr) => item + curr, 0)
@@ -129,12 +132,7 @@ export default {
    methods: {
     ...mapActions(['traerCursos']),
    
-   MetodoPedidosDelDia() {
-       const hoyes = this.cursos.filter(item => item.Fechadeenvio === this.hoy)
-       console.log(hoyes)
-       this.PedidosDelDiaArray.push(hoyes)
-       console.log("Acá pedidos del día: ",this.PedidosDelDiaArray)
-    },
+   
     
 
   },
