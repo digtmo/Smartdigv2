@@ -8,6 +8,7 @@ export default new Vuex.Store({
 			state: {
 				usuario: undefined,
 				cursos: [],
+				cursos2:[],
 				loading:false,
 			},
 			mutations: {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
 				},
 				CARGAR_CURSOS(state, cursos) {
 					state.cursos = cursos;
+				},
+				CARGAR_CURSOS2(state, cursos2) {
+					state.cursos2 = cursos2;
 				},
 			},
 			actions: {
@@ -128,7 +132,51 @@ export default new Vuex.Store({
 									reject();
 								})
 						},
-					)}
+					)},
+
+					async registroCostos(context, curso2) {
+						return new Promise((resolve, reject) => {
+								/* Create */
+								firebase
+									.firestore()
+									.collection("registroCostos")
+									.add(curso2)
+									.then(() => {
+										Swal.fire({
+											icon: "success",
+											title: "Registro Exitoso",
+										});
+										resolve()
+									})
+									.catch(err => {
+										alert("Error al agregar el registro, informe al administrador,")
+										console.log(err)
+										reject();
+									})
+							},
+						)},
+						traerCostos({
+							commit
+						}) {
+							firebase
+							console.log("pasando por traer costos")
+								.firestore()
+								.collection("registroCostos")
+								.onSnapshot((result) => {
+									let cursos2 = [ ];
+									result.forEach((element) => {
+										cursos2.push({
+											Nombre: element.registroCostos().Nombre,
+											Ciudad: element.registroCostos().Ciudad,
+											Detalle: element.registroCostos().Detalle,
+											Total: element.registroCostos().Total,
+											Fecha: element.registroCostos().Fecha,
+											idDoc: element.id,
+										});
+									});
+									commit("CARGAR_CURSOS2", cursos2);
+								});
+						},
 				},
 				modules: {},
 				getters: {
