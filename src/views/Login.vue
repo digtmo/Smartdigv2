@@ -27,13 +27,13 @@
                       mdi-phone-in-talk
                     </v-icon>
                     <h2 class="text-h4 white--text font-weight-light">
-                      Title 5
+                      Gestión
                     </h2>
                   </v-card-title>
                   <v-container>
                     <v-row>
                       <v-col>
-                        Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus, vix an salutandi sententiae.
+                        Gestiona tu trabajo de forma eficiente, lleva un orden detallado de tu trabajo y logra los objetivos propuesto.
                       </v-col>
                     </v-row>
                   </v-container>
@@ -123,7 +123,7 @@
           </v-col>
 
           <v-col cols="12" xs="12" md="6">
-            <v-container class="pt-5">
+            <v-container >
                 <div class="CuadroPrincipal">
                   <h1>Bienvenido a la gestión de trabajo moderno.</h1>
                   <p>Automatiza procesos, gestiona tus documentos, controla tus finanzas y trabaja de forma mas eficiente, todo con una sola plataforma.</p>
@@ -199,7 +199,7 @@
         </v-row>
  
     <br>
-    
+     
     
   </v-container>
 
@@ -299,7 +299,7 @@ export default {
 }
 
 .CuadroPrincipal{
-    padding-top: 150px;
+    padding-top: 100px;
 }
 
 .CuadroPrincipal h1{
@@ -325,5 +325,8 @@ export default {
   margin-top: 5%;
   margin-right: 70%;
 }
+
+
+
 </style>
 
