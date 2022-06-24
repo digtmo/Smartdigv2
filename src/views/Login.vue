@@ -52,29 +52,25 @@
               >
                 <v-card>
                   <v-card-title class="amber lighten-1 justify-end">
-                    <h2 class="text-h4 mr-4 white--text font-weight-light">
-                      Title 2
-                    </h2>
-                    <v-icon
+                      <v-icon
                       dark
                       size="20"
+                      class="mr-4"
                     >
                       mdi-home-outline
                     </v-icon>
+                    <h2 class="text-h4 mr-4 white--text font-weight-light">
+                     Finanzas
+                    </h2>
                   </v-card-title>
                   <v-container>
                     <v-row>
                       <v-col
+                      class="text-justify"
                         cols="12"
-                        md="8"
+                        md="12"
                       >
-                      1 Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit.
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        md="4"
-                      >
-                        Lorem ipsum dolor sit amet, no nam oblique veritus.
+                      Manten tus finanzas ordenadas, llevando un registro de todos tus ingresos e ingreso, ademas de cualquier otro parametro que desees obtener.
                       </v-col>
                     </v-row>
                   </v-container>
@@ -91,20 +87,21 @@
                     <v-icon
                       dark
                       size="20"
+                      class="mr-5"
                     >
                       mdi-account-multiple-outline
                     </v-icon>
                     <h2 class="text-h4 white--text font-weight-light">
-                      Title 3
+                     Usuarios
                     </h2>
                   </v-card-title>
                   <v-container>
                     <v-row>
                   <v-col
                         cols="12"
-                        md="10"
+                        md="12" 
                       >
-                        Lorem ipsum dolor sit amet, no nam oblique veritus. Commune scaevola imperdiet nec ut, sed euismod convenire principes at. Est et nobis iisque percipit, an vim zril disputando voluptatibus.
+                        Permite compartir tu informacion con otros compañeros de tu organización, llevando la informacion en tiempo real a cada usuario.
                       </v-col>
                     </v-row>
                   </v-container>
